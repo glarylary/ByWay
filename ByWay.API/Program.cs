@@ -6,7 +6,22 @@ using ByWay.Application.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
+using ByWay.Application.services;
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.WithOrigins("https://localhost:7255","http://localhost:5201")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 // DB
 builder.Services.AddDbContext<AppDbContext>(opt =>
@@ -20,6 +35,12 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 // Repositories / UoW
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ICourseService, CourseService>();
+builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+builder.Services.AddScoped<ITutorRepositery, TutorRepository>();
+builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
+builder.Services.AddScoped<IPurchaseRepository, PurchaseRepository>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

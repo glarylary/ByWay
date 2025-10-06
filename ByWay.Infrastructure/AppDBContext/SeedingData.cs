@@ -42,7 +42,6 @@ namespace ByWay.Infrastructure.Data
         // Seed Tutors and Students as IdentityUsers + Domain entities
         public static void SeedUsers(ModelBuilder builder)
         {
-            var passwordHasher = new PasswordHasher<IdentityUser>();
 
             var tutor1 = new IdentityUser
             {
@@ -89,8 +88,8 @@ namespace ByWay.Infrastructure.Data
 
             // Domain Tutor entities
             builder.Entity<Tutor>().HasData(
-                new Tutor { Id = 1, UserId = "user-tutor1", Bio = "Experienced React developer", ImageURL = "https://via.placeholder.com/150", SubjectId = 1 },
-                new Tutor { Id = 2, UserId = "user-tutor2", Bio = "Java educator and backend expert", ImageURL = "https://via.placeholder.com/150", SubjectId = 2 }
+                new Tutor { Id = 1, UserId = "user-tutor1", Bio = "Experienced React developer", ImageURL = "0", SubjectId = 1},
+                new Tutor { Id = 2, UserId = "user-tutor2", Bio = "Java educator and backend expert", ImageURL = "2", SubjectId = 3 }
             );
 
             // Domain Student entity
@@ -103,7 +102,7 @@ namespace ByWay.Infrastructure.Data
         public static void SeedCourses(ModelBuilder builder)
         {
             builder.Entity<Course>().HasData(
-                new Course {ThumbnailUrl = "Thumbnail1.Png", Id = 1, Title = "React for Beginners", Description = "Learn React basics", Price = 99.99m, Rating = 4.7, SubjectId = 1, TutorId = 1, NumberOfLectures = 10 },
+                new Course {ThumbnailUrl = "Thumbnail1.Png", Id = 1, Title = "React for Beginners", Description = "Learn React basics", Price = 99.99m, Rating = 4.7, SubjectId = 1 , TutorId = 1, NumberOfLectures = 10 },
                 new Course {ThumbnailUrl = "Thumbnail1.Png", Id = 2, Title = "Advanced Java", Description = "Deep dive into Java programming", Price = 149.99m, Rating = 4.8, SubjectId = 2, TutorId = 2, NumberOfLectures = 12 },
                 new Course {ThumbnailUrl = "Thumbnail1.Png", Id = 3, Title = "JavaScript Fundamentals", Description = "Core JavaScript concepts", Price = 79.99m, Rating = 4.5, SubjectId = 4, TutorId = 1, NumberOfLectures = 8 }
             );
@@ -114,7 +113,6 @@ namespace ByWay.Infrastructure.Data
         {
             SeedRoles(builder);
             SeedSubjects(builder);
-            SeedUsers(builder);
             SeedCourses(builder);
         }
     }

@@ -32,7 +32,7 @@ namespace ByWay.Application.Services
                 SubjectId = c.SubjectId,
                 SubjectName = c.Subject?.Name,
                 TutorId = c.TutorId,
-                TutorName = c.Tutor?.UserId // or a real name if joined
+                TutorName = c.Tutor?.UserId 
             }).ToList();
         }
 

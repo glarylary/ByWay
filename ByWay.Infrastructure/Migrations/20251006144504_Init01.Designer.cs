@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ByWay.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251002124537_init")]
-    partial class init
+    [Migration("20251006144504_Init01")]
+    partial class Init01
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -77,11 +77,14 @@ namespace ByWay.Infrastructure.Migrations
                     b.Property<int>("TutorId")
                         .HasColumnType("int");
 
+                    b.Property<string>("TutorId1")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("SubjectId");
 
-                    b.HasIndex("TutorId");
+                    b.HasIndex("TutorId1");
 
                     b.ToTable("Courses");
 
@@ -138,48 +141,19 @@ namespace ByWay.Infrastructure.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime>("PurchaseDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
+
+                    b.Property<string>("StudentId1")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CourseId");
 
-                    b.HasIndex("StudentId");
+                    b.HasIndex("StudentId1");
 
                     b.ToTable("Purchases");
-                });
-
-            modelBuilder.Entity("ByWay.Domain.Student", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Students");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Student One",
-                            UserId = "user-student1"
-                        });
                 });
 
             modelBuilder.Entity("ByWay.Domain.Subject", b =>
@@ -248,54 +222,6 @@ namespace ByWay.Infrastructure.Migrations
                         {
                             Id = 10,
                             Name = "Cyber Security"
-                        });
-                });
-
-            modelBuilder.Entity("ByWay.Domain.Tutor", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Bio")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageURL")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SubjectId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SubjectId");
-
-                    b.ToTable("Tutors");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Bio = "Experienced React developer",
-                            ImageURL = "https://via.placeholder.com/150",
-                            SubjectId = 1,
-                            UserId = "user-tutor1"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Bio = "Java educator and backend expert",
-                            ImageURL = "https://via.placeholder.com/150",
-                            SubjectId = 2,
-                            UserId = "user-tutor2"
                         });
                 });
 
@@ -383,6 +309,11 @@ namespace ByWay.Infrastructure.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -435,55 +366,9 @@ namespace ByWay.Infrastructure.Migrations
 
                     b.ToTable("AspNetUsers", (string)null);
 
-                    b.HasData(
-                        new
-                        {
-                            Id = "user-tutor1",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "2690e7ad-5702-4fd1-b0f2-343c84f1b920",
-                            Email = "tutor1@gmail.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "TUTOR1@GMAIL.COM",
-                            NormalizedUserName = "TUTOR1@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEx5KZbHkTQ93pKEa6vDvLVhE8pxt0thUSy93fhqhUBGOsoVgkN83VKJcmOJL4Ee4w==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "0e3ec60e-08f4-46e4-8c3b-a526c1e9d415",
-                            TwoFactorEnabled = false,
-                            UserName = "tutor1@gmail.com"
-                        },
-                        new
-                        {
-                            Id = "user-tutor2",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "23765f61-905d-4135-baa5-fb8ad1689574",
-                            Email = "tutor2@gmail.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "TUTOR2@GMAIL.COM",
-                            NormalizedUserName = "TUTOR2@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJ7SHCAw3PDV0ElNVEEwEc1N0yxEmi5lre/RWpUtthL8PSgTDF3Y2BrzW2qnFTmnZQ==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "c4181bee-6ff6-4b2a-85d5-da8742d9df7c",
-                            TwoFactorEnabled = false,
-                            UserName = "tutor2@gmail.com"
-                        },
-                        new
-                        {
-                            Id = "user-student1",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "b3b56a03-6e89-4e27-9749-bfe06e1b1502",
-                            Email = "student1@gmail.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "STUDENT1@GMAIL.COM",
-                            NormalizedUserName = "STUDENT1@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFxlX12EZbm8spNIhKyVDGB/Agy81PWTV0Nu+QeTkzqxUR5f8CJVJMxmv+SpyN8R4A==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "ffe961c8-2e35-43bf-9a21-9b15314dc435",
-                            TwoFactorEnabled = false,
-                            UserName = "student1@gmail.com"
-                        });
+                    b.HasDiscriminator().HasValue("IdentityUser");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -546,23 +431,6 @@ namespace ByWay.Infrastructure.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "user-tutor1",
-                            RoleId = "role-tutor"
-                        },
-                        new
-                        {
-                            UserId = "user-tutor2",
-                            RoleId = "role-tutor"
-                        },
-                        new
-                        {
-                            UserId = "user-student1",
-                            RoleId = "role-student"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -584,6 +452,56 @@ namespace ByWay.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("ByWay.Domain.Student", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<int?>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("AspNetUsers", t =>
+                        {
+                            t.Property("UserId")
+                                .HasColumnName("Student_UserId");
+                        });
+
+                    b.HasDiscriminator().HasValue("Student");
+                });
+
+            modelBuilder.Entity("ByWay.Domain.Tutor", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<string>("Bio")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageURL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SubjectId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasIndex("SubjectId");
+
+                    b.HasDiscriminator().HasValue("Tutor");
+                });
+
             modelBuilder.Entity("ByWay.Domain.Course", b =>
                 {
                     b.HasOne("ByWay.Domain.Subject", "Subject")
@@ -594,9 +512,7 @@ namespace ByWay.Infrastructure.Migrations
 
                     b.HasOne("ByWay.Domain.Tutor", "Tutor")
                         .WithMany()
-                        .HasForeignKey("TutorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TutorId1");
 
                     b.Navigation("Subject");
 
@@ -606,31 +522,18 @@ namespace ByWay.Infrastructure.Migrations
             modelBuilder.Entity("ByWay.Domain.Purchase", b =>
                 {
                     b.HasOne("ByWay.Domain.Course", "Course")
-                        .WithMany()
+                        .WithMany("Purchases")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ByWay.Domain.Student", "Student")
                         .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StudentId1");
 
                     b.Navigation("Course");
 
                     b.Navigation("Student");
-                });
-
-            modelBuilder.Entity("ByWay.Domain.Tutor", b =>
-                {
-                    b.HasOne("ByWay.Domain.Subject", "Subject")
-                        .WithMany()
-                        .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Subject");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -682,6 +585,31 @@ namespace ByWay.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ByWay.Domain.Student", b =>
+                {
+                    b.HasOne("ByWay.Domain.Course", null)
+                        .WithMany("PurchasedStudents")
+                        .HasForeignKey("CourseId");
+                });
+
+            modelBuilder.Entity("ByWay.Domain.Tutor", b =>
+                {
+                    b.HasOne("ByWay.Domain.Subject", "Subject")
+                        .WithMany()
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subject");
+                });
+
+            modelBuilder.Entity("ByWay.Domain.Course", b =>
+                {
+                    b.Navigation("PurchasedStudents");
+
+                    b.Navigation("Purchases");
                 });
 #pragma warning restore 612, 618
         }

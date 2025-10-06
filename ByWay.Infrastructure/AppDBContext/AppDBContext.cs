@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ByWay.Infrastructure.Data
 {
-    public class AppDbContext : IdentityDbContext<IdentityUser>
+    public class AppDbContext : IdentityDbContext<IdentityUser, IdentityRole, string>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
@@ -27,5 +27,7 @@ namespace ByWay.Infrastructure.Data
             SeedingData.SeedAll(builder);
         }
     }
+
 }
+
 
