@@ -1,4 +1,5 @@
 ﻿using ByWay.Application.DTO;
+using ByWay.Application.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace ByWay.Application.services
 {
-    public interface IAdminServices
+    public interface IAdminService
     {
+        Task<AdminResponseDTO?> LoginAsync(AdminLoginDTO dto);
         Task<object> NumberOfTutors();
         Task<object> NumberOfCourses();
         Task<object> NumberOfSubjects();

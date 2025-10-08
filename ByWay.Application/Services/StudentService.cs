@@ -76,8 +76,6 @@ namespace ByWay.Application.Services
                 Masssege = "Student registered successfully."
             };
         }
-
-        // 🟢 Login a student
         public async Task<StudentVerifyModel> Login(StudentLoginDTO studentLoginDto)
         {
             var user = await _userManager.FindByEmailAsync(studentLoginDto.Email);
@@ -106,8 +104,6 @@ namespace ByWay.Application.Services
                 Masssege = "Login successful."
             };
         }
-
-
         public async Task<VerifyPurchaseDTO> PurchaseCourseAsync(CreatePurchaseDTO purchaseDto)
         {
 
@@ -163,6 +159,17 @@ namespace ByWay.Application.Services
                 IsSuccessful = true,
                 Message = "Course purchased successfully."
             };
+        }
+        public async Task<IEnumerable<StudentResponseDTO>> GetAllStudentsAsync()
+        {
+            var students = await _unitOfWork.Students.GetAllAsync();
+
+            return students.Select(s => new StudentResponseDTO
+            {
+                Id = s.Id,
+                Name = s.Name,
+                Email = s.Email
+            });
         }
     }
 }

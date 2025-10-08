@@ -4,14 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ByWay.Domain
+namespace ByWay.Application.DTO
 {
-    public class Admin
+    public class AdminLoginDTO
     {
-        public int Id { get; set; }
-        public string UserId { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
     }
 }
-

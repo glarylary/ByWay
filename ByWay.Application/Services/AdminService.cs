@@ -1,19 +1,20 @@
 ﻿using ByWay.Application.DTO;
+using ByWay.Application.Interfaces;
 using ByWay.Application.services;
 using ByWay.Domain;
 using ByWay.Infrastructure.Interfaces;
 using ByWay.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace ByWay.Application.Services
 {
-    public class AdminService: IAdminServices
+    public class AdminService: IAdminService
     {
         private readonly IUnitOfWork _UnitOfWork;
         private readonly UserManager<IdentityUser> _userManager;
@@ -31,6 +32,27 @@ namespace ByWay.Application.Services
 
         //This is the dashboard for admin
 
+        public async Task<AdminResponseDTO?> LoginAsync(AdminLoginDTO dto)
+        {
+            var admin = await _UnitOfWork.Admins.GetAdminByEmailAsync(dto.Email);
+
+            if (admin == null || admin.Email.ToLower() != dto.Email.ToLower() || admin.Password != dto.Password)
+            {
+                return new AdminResponseDTO
+                {
+                    State = false,
+                    Masssege = "Invalid email or password."
+                };
+            }
+
+            return new AdminResponseDTO
+            {
+                Id = admin.Id,
+                Email = admin.Email,
+                State = true,
+                Masssege = "Login successful."
+            };
+        }
         public async Task<object> NumberOfTutors()
         {
             var NumberOfTutors = await _UnitOfWork.Tutors.Count();

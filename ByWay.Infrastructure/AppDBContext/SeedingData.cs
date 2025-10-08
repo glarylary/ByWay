@@ -42,6 +42,13 @@ namespace ByWay.Infrastructure.Data
         // Seed Tutors and Students as IdentityUsers + Domain entities
         public static void SeedUsers(ModelBuilder builder)
         {
+            var Admin = new IdentityUser
+            {
+                Id = "user-admin",
+                UserName = "Admin1",
+                Email = "admin@Byway.com",
+                PasswordHash = "AQAAAAEAACcQAAAAEBHCtKqj/4AyA7TtM6uBnZ1uGm1RkIYfVqRrFWqLqIuEuwfbnE0jMoVqq5R0OqJp1g==", // Password: Admin@123
+            };
 
             var tutor1 = new IdentityUser
             {
@@ -77,13 +84,14 @@ namespace ByWay.Infrastructure.Data
             };
 
 
-            builder.Entity<IdentityUser>().HasData(tutor1, tutor2, student1);
+            builder.Entity<IdentityUser>().HasData(tutor1, tutor2, student1, Admin);
 
             // assign roles
             builder.Entity<IdentityUserRole<string>>().HasData(
                 new IdentityUserRole<string> { RoleId = "role-tutor", UserId = "user-tutor1" },
                 new IdentityUserRole<string> { RoleId = "role-tutor", UserId = "user-tutor2" },
-                new IdentityUserRole<string> { RoleId = "role-student", UserId = "user-student1" }
+                new IdentityUserRole<string> { RoleId = "role-student", UserId = "user-student1" },
+                new IdentityUserRole<string> { RoleId = "role-admin", UserId = "user-admin" }
             );
 
             // Domain Tutor entities

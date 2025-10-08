@@ -13,5 +13,6 @@ namespace ByWay.Application.services
         Task<StudentVerifyModel> Register(StudentCreateDTO studentCreateDto);
         Task<StudentVerifyModel> Login(StudentLoginDTO studentLoginDto);
         Task<VerifyPurchaseDTO> PurchaseCourseAsync(CreatePurchaseDTO purchaseDto);
+        Task<IEnumerable<StudentResponseDTO>> GetAllStudentsAsync();
     }
 }

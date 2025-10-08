@@ -9,6 +9,7 @@ namespace ByWay.Infrastructure.Interfaces
 {
     public interface IUnitOfWork
     {
+        IAdminRepository Admins { get; }
         IGenericRepository<Student> Students { get; }
         ICourseRepository Courses { get; }
         IGenericRepository<Tutor> Tutors { get; }

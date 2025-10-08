@@ -9,6 +9,7 @@ namespace ByWay.Infrastructure.Repositories
     {
         private readonly AppDbContext _context;
 
+        public IAdminRepository Admins { get; private set; }
         public IGenericRepository<Student> Students { get; private set; }
         public ICourseRepository Courses { get; private set; }
         public IGenericRepository<Tutor> Tutors { get; private set; }
@@ -21,6 +22,7 @@ namespace ByWay.Infrastructure.Repositories
             IStudentRepository studentRepository,
             ICourseRepository courseRepository,
             ISubjectRepository subjectRepository,
+            IAdminRepository adminRepository,
             IPurchaseRepository purchaseRepository)
         {
             _context = context;
@@ -30,6 +32,7 @@ namespace ByWay.Infrastructure.Repositories
             Tutors = tutorRepository;
             Subjects = subjectRepository;
             Purchases = purchaseRepository;
+            Admins = adminRepository;
         }
 
         public async Task<int> Complete() => await _context.SaveChangesAsync();
