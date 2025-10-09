@@ -46,7 +46,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp",
         policy => policy
-            .WithOrigins("http://localhost:3001")
+            .WithOrigins("http://localhost:3001", "https://manhole007-001-site1.qtempurl.com/")
             .AllowAnyHeader()
             .AllowAnyMethod());
 });
@@ -62,7 +62,7 @@ using (var scope = app.Services.CreateScope())
     ctx.Database.Migrate();
 }
 
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
